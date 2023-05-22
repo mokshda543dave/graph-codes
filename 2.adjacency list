@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    //used SET because in vector for edge (1,1) we get 1,1,... in list of vertex 1 but with set it becomes 1 only (required) no redundancy.
+    //other option is: don't give  graph[u].insert(v) when already  graph[v].insert(u) is given
+    int t;
+    cout<<"enter the no of vertices ";
+    cin>>t;
+    int e;
+    cout<<"enter edges ";
+    cin>>e;
+   set<int> graph[t];
+    for(int i=0;i<e;i++)
+    {
+        int u,v;
+        cout<<"enter u and v: ";
+        cin>>u>>v;s
+        graph[u].insert(v);
+        graph[v].insert(u);
+    }
+    cout<<"\nGRAPH REPRESEENTATION ";
+    for(int i=0;i<t;i++)
+    {
+        cout<<"for vertex "<<i<<endl;
+        for(auto j:graph[i])
+        {
+           cout<<j<<" ";
+        }
+        cout<<endl;
+    }
+    return 0;
+}
