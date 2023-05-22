@@ -1,15 +1,15 @@
  vector<int> bfsOfGraph(int V, vector<int> adj[]) 
     {
         vector<int> ans;
-        queue<int> q;
+        queue<int> q;     // for level order traversal
         q.push(0);
-        int vis[V]={0};
+        int vis[V]={0};           //to avoid redundant trversal of nodes at equal distancces from more than two nodes
         vis[0]=1;
          while(!q.empty())
         {
             int front=q.front();
             ans.push_back(front);
-            q.pop();
+            q.pop();                      //front se ek pop krwao or usse adjacent saro ko queue me  push krwao
             for(auto each:adj[front])
             {
                if(!vis[each])
