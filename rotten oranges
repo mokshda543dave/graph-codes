@@ -1,0 +1,47 @@
+// 1.BFS: becoz cost increases on each of 4 adj places
+  // 2. not DFS: then we cannot track the cost for level by level rottening  of oranges(no track of time)
+  // 3. by BFS : 1. find all '2' in matrix i.e. rotten oranges
+            //   2. push all the unvisited fresh '1' inthe queue 
+  
+    bool check(int i,int j,int r,int c,vector<vector<int>>& grid,vector<vector<bool>>& vis)
+    {
+      if(i<r and i>=0 and j<c and j>=0 and !vis[i][j] and grid[i][j]==1)
+      {vis[i][j]=true; return true;}
+       return false;
+    }
+    
+    int orangesRotting(vector<vector<int>>& grid) 
+    {
+        int n=grid.size();
+        int m=grid[0].size();
+    queue<pair<pair<int,int>,int> > q;   // (x,y)  and time
+    vector<vector<bool>> vis(n,vector<bool>(m));
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<m;j++)
+        {
+            if(grid[i][j]==2) {
+                vis[i][j]=true;
+                q.push(make_pair(make_pair(i,j),0));
+            }
+        }
+    }
+    int t=0;
+    while(!q.empty())
+    {
+        pair<int,int> index=q.front().first;
+        t=q.front().second;
+        q.pop();
+        int i=index.first,j=index.second;
+        grid[i][j]=2;
+       if(check(i,j-1,n,m,grid,vis)) q.push(make_pair(make_pair(i,j-1),t+1));  // left
+       if(check(i-1,j,n,m,grid,vis)) q.push(make_pair(make_pair(i-1,j),t+1));  // up
+       if(check(i+1,j,n,m,grid,vis)) q.push(make_pair(make_pair(i+1,j),t+1));   // down
+       if(check(i,j+1,n,m,grid,vis)) q.push(make_pair(make_pair(i,j+1),t+1));   // right
+    }
+    int total=0;
+    for(int i=0;i<n;i++)
+        total+=count(grid[i].begin(),grid[i].end(),1);  //as all '1' are turned '2' we shall not have any '1' remaining 
+        if(total>0) return -1;   // if remains the return -1 (not all rotten)
+        return t;       //return t calculated
+    }
