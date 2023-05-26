@@ -1,0 +1,19 @@
+void convert(int i,int j,int r,int c,vector<vector<int>>& image,int newColor,int old)
+{
+    if(i>=0 and i<r and j>=0 and j<c and image[i][j]==old)
+    {
+        image[i][j]=newColor;
+        convert(i,j-1,r,c,image,newColor,old);
+        convert(i-1,j,r,c,image,newColor,old); 
+         convert(i,j+1,r,c,image,newColor,old);
+          convert(i+1,j,r,c,image,newColor,old);
+    }
+}
+
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) 
+    {
+        int old=image[sr][sc];
+        if(newColor==old)  return image;     //if absent the it will go into an infinite loop becoz recursive call on same set of nodes will be executed
+       convert(sr,sc,image.size(),image[0].size(),image,newColor,old);
+       return image;
+    }
