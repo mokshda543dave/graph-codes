@@ -1,0 +1,22 @@
+#include<bits/stdc++.h>
+
+int solve(int currday,int lasttask,vector<vector<int>> &points,vector<vector<int>>& dp)
+{ 
+    if(currday<0) return 0;
+    int result=0;
+    if(dp[currday][lasttask]!=-1) return dp[currday][lasttask];
+    for(int i=0;i<3;i++)      // for current day checking alll the three possible tasks and taking the one returning maximum merit points
+    {
+        if(i!=lasttask)
+        {
+        result=max(result,points[currday][i]+solve(currday-1,i,points,dp));
+        }
+    }
+    return dp[currday][lasttask]=result;
+}
+
+int ninjaTraining(int n,vector<vector<int>> &points)
+{
+     vector<vector<int>> dp(n,vector<int> (4,-1));    //4 col: c1-task0  c2-task1  c3-task2   c4-none of 3 tasks performed on that ith day
+      return solve(n-1,3,points,dp);       
+}
