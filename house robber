@@ -1,0 +1,54 @@
+// memoisation-----------------------------------------------
+int solve(int i,vector<int>& nums,vector<int>& dp)
+{
+    if(i==-1) return 0;
+    if(dp[i]!=-1) return dp[i];
+    int select=nums[i]+solve(i-2,nums,dp);
+    int notselect=solve(i-1,nums,dp);
+    return dp[i]=max(select,notselect);
+}
+
+    int rob(vector<int>& nums) 
+    {
+        int n=nums.size();
+       if(n==1) return nums[0];
+       vector<int> dp(n,-1);
+       dp[0]=nums[0];
+      return solve(nums.size()-1,nums,dp);   
+    }
+// tabulation------------------------------------------------------
+    // int rob(vector<int>& nums) 
+    // {  
+    //  int n=nums.size();
+    //    if(n==1) return nums[0];
+    //    vector<int> dp(n,0);
+    //    dp[0]=nums[0];
+    //    for(int i=1;i<n;i++)
+    //    {
+    //        if(i==1)
+    //        dp[i]=max(nums[i],dp[i-1]);
+    //        else
+    //        dp[i]=max(nums[i]+dp[i-2],dp[i-1]);
+    //    }
+    //    return dp[n-1];
+    // }
+    // space optimised------------------------------------------------------
+    // int rob(vector<int>& nums) 
+    // {   
+    // int n=nums.size();
+    //    if(n==1) return nums[0];
+    //    vector<int> dp(n,0);
+    //    int prev1=nums[0];    // first most closest   dp[0] in case of i=1 call  dp(i-1)
+    //    int prev2=0;   // second most closest          dp[-1] in ccase of i=1 call  dp(i-2)
+    //    int result;
+    //    for(int i=1;i<n;i++)
+    //    {
+    //        if(i==1)
+    //        result=max(nums[i],prev1);
+    //        else
+    //        result=max(nums[i]+prev2,prev1);
+    //        prev2=prev1;
+    //        prev1=result;
+    //    }
+    //    return result;
+    // }
