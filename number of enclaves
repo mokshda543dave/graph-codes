@@ -1,0 +1,45 @@
+//DFS-->same as surrounded regions 
+//BFS----> 1. result: no fo nodes that are in non border province.
+// count--->visit all non border province nodes
+// in surroounde region question: we used border nodes as start nodes ---->to determine location of border node just (i,j) is required (in queue)
+//push the 1's present in 4 borders and each behaves as start node of bfs (if unvisited till yet)
+int row[4]={0,-1,0,1};
+int col[4]={-1,0,1,0};
+bool isvalid(int i,int j,int r,int c) {return (i>=0 and i<r and j>=0 and j<c)?true:false;}
+int numEnclaves(vector<vector<int>>& grid) 
+    {
+         int m=grid.size();
+        int n=grid[0].size();
+        int count=0;
+        vector<vector<int>> vis(m,vector<int> (n,0));
+        queue<pair<int,int>> q;     //{{x,y},border}
+    for(int i=0;i<m;i++)      // first column
+           {
+               if(!vis[i][0] and grid[i][0]==1)     { vis[i][0]=1;  q.push({i,0});}
+               if(!vis[i][n-1] and grid[i][n-1]==1)     { vis[i][n-1]=1;  q.push({i,n-1});}
+           }
+        for(int i=0;i<n;i++)      // first column
+           {
+               if(!vis[0][i] and grid[0][i]==1)  { vis[0][i]=1; q.push({0,i});}   // first row
+               if(!vis[m-1][i] and grid[m-1][i]==1) { vis[m-1][i]=1;  q.push({m-1,i});}       // last row
+           }
+           while(!q.empty())
+           {
+               int x=q.front().first;
+               int y=q.front().second;
+               q.pop();
+        for(int i=0;i<4;i++)
+        {
+           if(isvalid(x+row[i],y+col[i],m,n) and !vis[x+row[i]][y+col[i]] and grid[x+row[i]][y+col[i]]==1)
+               {vis[x+row[i]][y+col[i]]=1;   q.push({x+row[i],y+col[i]});}
+        }
+          }
+          for(int i=0;i<m;i++)      // first column
+      {
+         for(int j=0;j<n;j++)
+               {
+                  if(grid[i][j]==1 and !vis[i][j]) ++count;
+                }
+    }
+           return count;
+    }
