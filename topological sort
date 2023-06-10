@@ -1,0 +1,23 @@
+ 
+ //instead of reversing we can use stack as welll bbut 
+ 
+ void dfs(int node,vector<int> adj[],vector<int>& vis,vector<int>& ans)
+	{
+	    for(auto it:adj[node])
+	    {
+	        if(!vis[it]) {vis[it]=1; dfs(it,adj,vis,ans);}
+	    }
+	    ans.push_back(node);
+	}
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    vector<int> ans;
+	    vector<int> vis(V);
+	    stack<int> s;
+	    for(int i=0;i<V;i++)
+	    {
+	        if(!vis[i]) {vis[i]=1; dfs(i,adj,vis,ans);}
+	    }
+	    reverse(ans.begin(),ans.end());
+	     return ans;
+	 }
